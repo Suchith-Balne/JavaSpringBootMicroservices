@@ -1,10 +1,12 @@
 package com.java.simplesocialmediaapp.restfulwebservices.user;
 
+import com.java.simplesocialmediaapp.restfulwebservices.post.Post;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity(name = "user_details")
 public class User {
@@ -14,6 +16,9 @@ public class User {
     private Integer id;
     @Size(min = 2, message = "Name must have more than 2 characters")
     private String name;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
     @Column(name = "birth_date")
     @Past(message = "Date of birth must be past date")
@@ -51,6 +56,10 @@ public class User {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
     }
 
     @Override
